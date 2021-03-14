@@ -1,0 +1,16 @@
+select courses.name, AVG(student_course.grade) avg_grade, MAX(student_course.grade) highest_grade
+from courses 
+join student_course 
+on (courses.id = student_course.course_id)
+group by courses.name
+
+
+select top 10 courses.name course, CONCAT(students.name, ' ', students.surname) student, CONCAT(professors.name, ' ', professors.surname) professor, student_course.grade
+from students
+join student_course 
+on (students.id = student_course.student_id)
+join courses
+on (courses.id = student_course.course_id)
+join professors
+on (professors.id = courses.professor_id)
+order by grade desc

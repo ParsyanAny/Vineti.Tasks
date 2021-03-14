@@ -1,0 +1,16 @@
+select coffee.name, avg(coffee.price) avg_price from order_list
+join coffee
+on (coffee.id = order_list.coffee_id)
+where created_at > DATEADD(month, -1, getdate())
+group by coffee.name
+
+
+select top 10 customer.name customer, count(customer_id) count, sum(coffee.price - (coffee.price * order_list.discount / 100)) 
+from order_list
+join customer
+on (customer.id = order_list.customer_id)
+join coffee
+on (coffee.id = order_list.coffee_id)
+where created_at > DATEADD(month, -1, getdate())
+group by customer.id, customer.name
+order by count desc
